@@ -14,10 +14,10 @@ if('ping' == $github_event) {
 
 try {
     // Convert the post data
-    $data = stripslashes( $_POST['payload'] );
+    $data = isset($_POST[ 'payload' ]) ? stripslashes($_POST[ 'payload' ]) : null;
     $postdata = json_decode($data);
 
-    if($_POST['payload'] && $postdata) {
+    if ($data && $postdata) {
         $repo_name  = $postdata->repository->full_name;
 
         // Iterate through each commit to see if we have a related task
@@ -88,8 +88,13 @@ try {
         }
     }
 
+    if (!$data) {
+        throw new Exception( 'Warning: no {payload}' );
+    }
+
 } catch (Exception $e) {
-    print_r($e);
+    _debug( $e );
+    echo $e->getMessage();
 }
 
 function _debug($obj) {
