@@ -6,8 +6,11 @@
 require_once 'config.php';
 
 
-$headers = @apache_request_headers();
-$github_event = @$headers[ 'X-GitHub-Event' ];
+$prefix = preg_quote(_get( 'prefix', '#' ));
+$comment_regex = '/' . $prefix . '([A-Za-z0-9_]+)/';
+
+$github_headers = @apache_request_headers();
+$github_event = @$github_headers[ 'X-GitHub-Event' ];
 if('ping' == $github_event) {
     echo 'Ping. URL: ' . COMMENT_URL;
 }
@@ -29,8 +32,8 @@ try {
             $timestamp  = $commit->timestamp;
             $author     = $commit->author->name;
 
-            // Get any commit messages that have a # tag (points ot a resource ID in Teamwork)
-            preg_match_all('/#([A-Za-z0-9_]+)/', $comment, $matches);
+            // Get any commit messages that have a # tag (points to a resource ID in Teamwork)
+            preg_match_all( $comment_regex, $comment, $matches );
             // Remove the first index since it's the original
             $resourceID = array_pop($matches);
 
@@ -97,8 +100,13 @@ try {
     echo $e->getMessage();
 }
 
+
+function _get( $key, $default = NULL ) {
+    return isset($_GET[ $key ]) ? $_GET[ $key ] : $default;
+}
+
 function _debug($obj) {
-    if (isset($_GET[ 'debug' ])) {
+    if (_get( 'debug' )) {
         print_r($obj);
     }
 }
