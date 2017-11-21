@@ -11,13 +11,14 @@ $comment_regex = '/' . $prefix . '([A-Za-z0-9_]+)/';
 
 $github_headers = @apache_request_headers();
 $github_event = @$github_headers[ 'X-GitHub-Event' ];
-if('ping' == $github_event) {
+if('ping' === $github_event) {
     echo 'Ping. URL: ' . COMMENT_URL;
 }
 
 try {
     // Convert the post data
-    $data = isset($_POST[ 'payload' ]) ? stripslashes($_POST[ 'payload' ]) : null;
+    $data = isset($_POST[ 'payload' ]) ? /*stripslashes(*/$_POST[ 'payload' ] : null;
+    $data = str_replace([ '\n', '\r' ], ' ', $data );
     $postdata = json_decode($data);
 
     if ($data && $postdata) {
@@ -44,9 +45,12 @@ try {
                         '{COMMIT_NAME}' => $repo_name .'@'. substr($commitID, 0, 7),
                         '{AUTHOR}'  => $author,
                         '{DATE}'    => date(DATE_FORMAT, strtotime($timestamp)) ));
+            // https://developer.teamwork.com/comments#creating_a_commen
             $params = array(
                 'comment' => array(
-                    'body' => $body
+                    'body' => $body,
+                    # 'notify' => TEAMWORK_NOTIFY,
+                    # 'isprivate' => false,
                 )
             );
             $postData = json_encode($params);
