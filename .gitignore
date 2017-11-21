@@ -2,5 +2,7 @@
 
 config.php
 
-Thumbs.db
-.DS_Store
+composer.lock
+vendor/
+
+# end.

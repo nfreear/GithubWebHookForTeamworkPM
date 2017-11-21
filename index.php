@@ -3,8 +3,8 @@
  * GitHub Post to TeamworkPM
  * @version 1.2
  */
-require_once 'config.php';
 
+require_once 'config.php';
 
 $prefix = preg_quote(_get( 'prefix', '#' ));
 $comment_regex = '/' . $prefix . '([A-Za-z0-9_]+)/';
@@ -72,11 +72,11 @@ try {
                         'Accept: application/json'
                     );
                     curl_setopt_array($c, array(
-                        CURLOPT_RETURNTRANSFER => TRUE,
-                        CURLOPT_HEADER         => TRUE,
-                        CURLOPT_SSL_VERIFYHOST => FALSE,
-                        CURLOPT_SSL_VERIFYPEER => FALSE,
-                        CURLOPT_POST => TRUE,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_HEADER         => true,
+                        CURLOPT_SSL_VERIFYHOST => false,
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_POST => true,
                         CURLOPT_PROXY => HTTP_PROXY,
                         CURLOPT_HTTPHEADER => $headers
                     ));

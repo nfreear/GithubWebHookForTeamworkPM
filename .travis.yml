@@ -1,0 +1,14 @@
+language: php
+
+php: 7
+
+git:
+  depth: 6
+
+install: composer install
+
+before_script: composer copy-config
+
+script: composer test
+
+# end.
