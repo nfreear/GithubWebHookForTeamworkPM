@@ -27,10 +27,15 @@ define( 'COMMENT_TEMPLATE', '> {COMMENT}
 
 * [GitHub: {COMMIT_NAME}]({URL})
 
-Committed by {AUTHOR} on {DATE} _(comment via GitHub)_' );
+Committed by {AUTHOR} on {DATE} _(comment via GitHub)_ {ICON}' );
+
+define(
+  'ICON',
+  '![](http://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/20px-Octicons-mark-github.svg.png)'
+);
 
 // Optionally, edit the date-time format for your locale, based on http://php.net/manual/en/function.date.php
-define( 'DATE_FORMAT', 'm/d/Y H:i:s e' );
+define( 'DATE_FORMAT', 'm/d/Y H:i:s T' );
 
 
 // End.

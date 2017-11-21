@@ -44,6 +44,7 @@ try {
                         '{URL}'     => $url,
                         '{COMMIT_NAME}' => $repo_name .'@'. substr($commitID, 0, 7),
                         '{AUTHOR}'  => $author,
+                        '{ICON}'    => constant('ICON'),
                         '{DATE}'    => date(DATE_FORMAT, strtotime($timestamp)) ));
             // https://developer.teamwork.com/comments#creating_a_commen
             $params = array(
